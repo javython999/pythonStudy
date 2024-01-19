@@ -1,5 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor
-import logger
+from util import logger
 
 """
 section 1

@@ -1,8 +1,6 @@
 import time
-import threading
 from concurrent.futures import ThreadPoolExecutor
-import logger
-
+from util import logger
 
 """
 section 1
@@ -30,42 +28,17 @@ Keyword - lock, deadLock, raceCondition, thread synchronization
 class FakeDataStore:
     # 공유 변수
     def __init__(self):
-        self._value = 0
-        self._lock = threading.Lock()
+        self.value = 0
 
     # 변수 업데이트 함수
     def update(self, name):
         logger.info(f'thread {name}: starting update')
 
         # 뮤텍스 or Lock 등 동기화(Thread Synchronization 필요)
-
-        # Lock 획득 방법1
-        # self._lock.acquire()
-        # logger.info(f'thread {name} has lock')
-        #
-        # local_copy = self._value
-        # local_copy += 1
-        # time.sleep(0.1)
-        # self._value = local_copy
-        #
-        # logger.info(f'thread {name} release lock')
-
-        # Lock 반환
-        #self._lock.release()
-
-
-        # Lock 획득 방법2
-        with self._lock:
-            logger.info(f'thread {name} has lock')
-
-            local_copy = self._value
-            local_copy += 1
-            time.sleep(0.1)
-            self._value = local_copy
-
-            logger.info(f'thread {name} release lock')
-
-
+        local_copy = self.value
+        local_copy += 1
+        time.sleep(0.1)
+        self.value = local_copy
 
         logger.info(f'thread {name}: finish update')
 
@@ -74,11 +47,11 @@ if __name__ == "__main__":
     # 클래스 인스턴스화
     store = FakeDataStore()
 
-    logger.info(f'Testing update. Starting value is {store._value}')
+    logger.info(f'Testing update. Starting value is {store.value}')
 
     # with Context 시작
     with ThreadPoolExecutor(max_workers=10) as executor:
         for i in ['First', 'Second', 'Third']:
             executor.submit(store.update, i)
 
-    logger.info(f'Testing update. Ending value is {store._value}')
+    logger.info(f'Testing update. Ending value is {store.value}')

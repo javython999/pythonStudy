@@ -1,6 +1,6 @@
 import threading
 import time
-import logger
+from util import logger
 
 """
 section 1

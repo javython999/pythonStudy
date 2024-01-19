@@ -1,5 +1,5 @@
 import concurrent.futures
-import logger
+from util import logger
 import queue
 import random
 import threading
