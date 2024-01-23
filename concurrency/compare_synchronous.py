@@ -17,7 +17,7 @@ def main():
         "https://www.jython.org",
         "http://olympus.realpython.org/dice",
         "https://realpython.com"
-    ] * 3
+    ] * 5
 
     # 실행시간
     start_time = time.time()
@@ -40,6 +40,7 @@ def request_all_sites(urls):
 
 def request_site(url, session):
     logger.info(f'{url}')
+    logger.info(f'session : {session}')
     logger.info(f'{session.headers}')
 
     with session.get(url) as response:
